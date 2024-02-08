@@ -1,5 +1,5 @@
-import React from "react";
-import { IoIosSend } from "react-icons/io";
+import React, { useState } from "react";
+import { IoIosSend, IoIosWarning } from "react-icons/io";
 import Select, { MultiValue, SingleValue } from "react-select";
 import InputWrapper from "./InputWrapper";
 import { tiersOptionsType } from "../hooks/useTickets";
@@ -48,6 +48,8 @@ const EventFormOne = ({
   selectedMentorshipValue,
   selectedWorkshopValue,
 }: Props) => {
+  const [isEmptyWorkshop, setIsEmptyWorkshop] = useState(true);
+  const [isEmptyMentorship, setIsEmptyMentorship] = useState(true);
   return (
     <form
       className="flex flex-col gap-3 items-start max-md:pb-6 justify-center"
@@ -165,17 +167,21 @@ const EventFormOne = ({
           <Select
             name="workshop"
             id="workshop"
-            required
             isMulti
             isLoading={isLoadingWorkspace}
             options={workspaceOptions}
-            loadingMessage={() => "loading workspaces list ..."}
+            loadingMessage={() => "loading workshops list ..."}
             noOptionsMessage={() =>
-              "sorry, there are no available workspaces now"
+              "sorry, there are no available workshops now"
             }
             value={selectedWorkshopValue}
             className="w-full border hover:border-secondary-100 focus:outline-none"
             onChange={(newValue) => {
+              if (newValue.length <= 0) {
+                setIsEmptyWorkshop(true);
+              } else {
+                setIsEmptyWorkshop(false);
+              }
               if (newValue.length > 2) return;
               handleSelectWorkshop(newValue);
             }}
@@ -201,6 +207,11 @@ const EventFormOne = ({
               "sorry, there are no available mentorship's"
             }
             onChange={(newValue) => {
+              if (newValue.length <= 0) {
+                setIsEmptyMentorship(true);
+              } else {
+                setIsEmptyMentorship(false);
+              }
               if (newValue.length > 2) return;
               handleSelectMentorship(newValue);
             }}
@@ -268,6 +279,14 @@ const EventFormOne = ({
           </span>
         </div>
       </div> */}
+      {isEmptyMentorship && isEmptyWorkshop && (
+        <div className="w-full flex items-center justify-center gap-3 px-3 py-2 mt-2 mb-1">
+          <IoIosWarning className="text-2xl text-red-500" />
+          <small className="font-bold capitalize text-red-700">
+            please select at least one of mentorship's or one of workshop's
+          </small>
+        </div>
+      )}
       <div className="w-full max-xs:flex-col flex gap-3 mt-4">
         {isFetchedMentorship &&
         isFetchedWorkspace &&
@@ -276,7 +295,8 @@ const EventFormOne = ({
           <>
             <button
               type="submit"
-              className="w-full max-xs:w-full flex items-center justify-center gap-4 px-4 py-2 bg-gradient-to-tr from-secondary-100 to-secondary-200 text-white font-semibold capitalize rounded-md hover:brightness-125"
+              className="w-full max-xs:w-full flex items-center justify-center gap-4 px-4 py-2 bg-gradient-to-tr from-secondary-100 to-secondary-200 text-white font-semibold capitalize rounded-md hover:brightness-125 disabled:from-slate-400 disabled:to-slate-300 disabled:cursor-not-allowed"
+              disabled={isEmptyMentorship && isEmptyWorkshop}
             >
               <span className="text-2xl">
                 <IoIosSend />
