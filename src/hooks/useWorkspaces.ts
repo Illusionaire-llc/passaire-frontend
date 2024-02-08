@@ -15,7 +15,6 @@ const useWorkspaces = () => {
   } = useQuery({
     queryKey: ["workspaces"],
     queryFn: getAllWorkspaces,
-    refetchInterval: 1000,
   });
   const [selectedWorkshop, setSelectedWorkshop] = useState<
     MultiValue<WorkspaceOptionsType>

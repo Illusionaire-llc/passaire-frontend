@@ -58,8 +58,9 @@ export async function sendCheckout(
       data: checkoutForm,
     });
     return checkoutResponse.data;
-  } catch (error) {
-    throw error;
+  } catch (error: any) {
+    console.log(error.response.data.detail);
+    throw error.response.data.detail || error;
   }
 }
 

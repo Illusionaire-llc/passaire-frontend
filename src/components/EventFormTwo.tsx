@@ -1,7 +1,7 @@
 import React from "react";
 import { IoIosSend } from "react-icons/io";
 import { MdOutlineCleaningServices } from "react-icons/md";
-// import { FaLink } from "react-icons/fa";
+import { FaLink } from "react-icons/fa";
 import InputWrapper from "./InputWrapper";
 import Select, { SingleValue } from "react-select";
 import { tiersOptionsType } from "../hooks/useTickets";
@@ -21,7 +21,7 @@ const EventFormTwo = ({
   onSubmit,
   handleSelectTicket,
   isLoadingTiers,
-  // setCurrentForm,
+  setCurrentForm,
   ticketsOptions,
 }: Props) => {
   return (
@@ -144,7 +144,7 @@ const EventFormTwo = ({
         {/* end select elements */}
       </div>
       <div className="w-full max-md:flex-col flex items-center justify-center gap-6">
-        {/* <InputWrapper dir="column" className="me-auto">
+        <InputWrapper dir="column" className="me-auto">
           <label
             htmlFor="promoCode"
             className="text-zinc-700 font-medium capitalize"
@@ -158,7 +158,7 @@ const EventFormTwo = ({
             className="w-full px-3 py-2 border hover:border-secondary-100 focus:outline-none"
             placeholder="enter promo code ..."
           />
-        </InputWrapper> */}
+        </InputWrapper>
       </div>
       {/* <div className="flex max-xs:flex-col max-xs:items-start items-center justify-start gap-6 max-xs:gap-2">
         <label htmlFor="" className="font-medium capitalize">
@@ -207,7 +207,7 @@ const EventFormTwo = ({
           <span className="text-2xl">
             <IoIosSend />
           </span>
-          <p>Registration Form</p>
+          <p>checkout</p>
         </button>
         <button
           type="reset"
@@ -217,7 +217,7 @@ const EventFormTwo = ({
           <p>reset</p>
         </button>
       </div>
-      {/* <button
+      <button
         type="button"
         className="flex items-center justify-center gap-3 underline text-slate-800 mx-auto pt-3 capitalize"
         onClick={() => setCurrentForm("FORM-EVENT-ONE")}
@@ -226,7 +226,7 @@ const EventFormTwo = ({
           <FaLink />
         </span>
         <p>change event form</p>
-      </button> */}
+      </button>
     </form>
   );
 };

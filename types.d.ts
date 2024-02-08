@@ -45,7 +45,8 @@ export interface CheckoutResponse {
 }
 
 export interface CheckoutInitialData {
-  fullName: string;
+  firstName: string;
+  lastName: string;
   email: string;
   company: string;
   phoneNumber: string;

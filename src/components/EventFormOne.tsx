@@ -1,7 +1,7 @@
 import React from "react";
 import { IoIosSend } from "react-icons/io";
-// import { MdOutlineCleaningServices } from "react-icons/md";
-// import { FaLink } from "react-icons/fa";
+import { MdOutlineCleaningServices } from "react-icons/md";
+import { FaLink } from "react-icons/fa";
 import Select, { MultiValue, SingleValue } from "react-select";
 import InputWrapper from "./InputWrapper";
 import { tiersOptionsType } from "../hooks/useTickets";
@@ -39,7 +39,7 @@ type Props = {
 };
 const EventFormOne = ({
   onSubmit,
-  // setCurrentForm,
+  setCurrentForm,
   handleSelectTicket,
   handleSelectWorkshop,
   handleSelectMentorship,
@@ -62,37 +62,37 @@ const EventFormOne = ({
       <div className="w-full flex max-sm:flex-col items-center justify-center gap-6">
         <InputWrapper dir="column">
           <label
-            htmlFor="fullName"
+            htmlFor="firstName"
             className="text-zinc-700 font-medium capitalize"
             aria-required
           >
-            full name
+            first name
           </label>
           <input
             type="text"
-            name="fullName"
-            id="fullName"
+            name="firstName"
+            id="firstName"
             required
             className="w-full px-3 py-2 border hover:border-secondary-100 focus:outline-none"
-            placeholder="enter your full name..."
+            placeholder="enter your first name..."
           />
         </InputWrapper>
         <InputWrapper dir="column">
           <label
-            htmlFor="email"
+            htmlFor="lastName"
             className="text-zinc-700 font-medium capitalize"
             aria-required
           >
-            email address
+            last name
           </label>
           <input
-            type="email"
-            name="email"
-            id="email"
+            type="text"
+            name="lastName"
+            id="lastName"
             required
             aria-required
             className="w-full px-3 py-2 border hover:border-secondary-100 focus:outline-none"
-            placeholder="enter email address..."
+            placeholder="enter last name..."
           />
         </InputWrapper>
       </div>
@@ -116,27 +116,28 @@ const EventFormOne = ({
         </InputWrapper>
         <InputWrapper dir="column">
           <label
-            htmlFor="eventsDate"
+            htmlFor="email"
             className="text-zinc-700 font-medium capitalize"
             aria-required
           >
-            event's date
+            email address
           </label>
           <input
-            type="date"
-            name="eventsDate"
-            id="eventsDate"
+            type="email"
+            name="email"
+            id="email"
             required
             aria-required
-            defaultValue={startDate}
-            disabled
             className="w-full px-3 py-2 border hover:border-secondary-100 focus:outline-none"
+            placeholder="enter email address..."
           />
         </InputWrapper>
       </div>
-      <div className="w-full max-md:flex-col flex items-center justify-center gap-6">
+      <div className="w-full max-md:flex-col flex items-center justify-start gap-6">
         {/* start select elements */}
-        <InputWrapper dir="column">
+        {/* hide ticket type with display:none class */}
+        {/* start ticket type select element */}
+        {/* <InputWrapper dir="column" className="hidden">
           <label
             htmlFor="ticketType"
             className="text-zinc-700 font-medium capitalize"
@@ -157,7 +158,8 @@ const EventFormOne = ({
             }
             className="w-full border hover:border-secondary-100 focus:outline-none"
           />
-        </InputWrapper>
+        </InputWrapper> */}
+        {/* end ticket type select element */}
         <InputWrapper dir="column">
           <label
             htmlFor="workshop"
@@ -180,15 +182,12 @@ const EventFormOne = ({
             value={selectedWorkshopValue}
             className="w-full border hover:border-secondary-100 focus:outline-none"
             onChange={(newValue) => {
-              console.log(newValue);
               if (newValue.length > 2) return;
               handleSelectWorkshop(newValue);
             }}
           />
         </InputWrapper>
         {/* end select elements */}
-      </div>
-      <div className="w-full max-md:flex-col md:flex-row-reverse flex items-center justify-center gap-6">
         <InputWrapper dir="column">
           <label
             htmlFor="mentorship"
@@ -214,21 +213,27 @@ const EventFormOne = ({
             className="w-full border hover:border-secondary-100 focus:outline-none"
           />
         </InputWrapper>
-        {/* <InputWrapper dir="column">
+      </div>
+      <div className="w-full max-md:flex-col md:flex-row-reverse flex items-center justify-end max-md:justify-center gap-6">
+        <InputWrapper dir="column">
           <label
-            htmlFor="company"
+            htmlFor="eventsDate"
             className="text-zinc-700 font-medium capitalize"
+            aria-required
           >
-            promo code
+            event's date
           </label>
           <input
-            type="text"
-            name="company"
-            id="company"
+            type="date"
+            name="eventsDate"
+            id="eventsDate"
+            required
+            aria-required
+            defaultValue={startDate}
+            disabled
             className="w-full px-3 py-2 border hover:border-secondary-100 focus:outline-none"
-            placeholder="enter company ..."
           />
-        </InputWrapper> */}
+        </InputWrapper>
       </div>
       {/* <div className="flex max-xs:flex-col max-xs:items-start items-center justify-start gap-6 max-xs:gap-2">
         <label htmlFor="" className="font-medium capitalize">
@@ -284,13 +289,6 @@ const EventFormOne = ({
               </span>
               <p>done</p>
             </button>
-            {/* <button
-              type="reset"
-              className="w-1/2 max-xs:w-full flex items-center justify-center gap-4 px-4 py-2 bg-red-200 text-red-800 font-semibold capitalize rounded-md hover:brightness-125"
-            >
-              <MdOutlineCleaningServices />
-              <p>reset</p>
-            </button> */}
           </>
         ) : (
           <small className="py-3 px-4 rounded-md shadow-md bg-yellow-300 capitalize font-semibold text-yellow-800 bg-opacity-70">
