@@ -167,7 +167,6 @@ const EventFormOne = ({
           <Select
             name="workshop"
             id="workshop"
-            required
             isMulti
             isLoading={isLoadingWorkspace}
             options={workspaceOptions}
