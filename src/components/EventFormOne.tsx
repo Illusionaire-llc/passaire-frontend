@@ -1,7 +1,5 @@
 import React from "react";
 import { IoIosSend } from "react-icons/io";
-import { MdOutlineCleaningServices } from "react-icons/md";
-import { FaLink } from "react-icons/fa";
 import Select, { MultiValue, SingleValue } from "react-select";
 import InputWrapper from "./InputWrapper";
 import { tiersOptionsType } from "../hooks/useTickets";
@@ -39,16 +37,12 @@ type Props = {
 };
 const EventFormOne = ({
   onSubmit,
-  setCurrentForm,
-  handleSelectTicket,
   handleSelectWorkshop,
   handleSelectMentorship,
-  isLoadingTiers,
   isLoadingWorkspace,
   isLoadingMentorship,
   isFetchedMentorship,
   isFetchedWorkspace,
-  ticketsOptions,
   workspaceOptions,
   mentorshipOptions,
   selectedMentorshipValue,

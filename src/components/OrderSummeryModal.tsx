@@ -24,7 +24,7 @@ const OrderSummeryModal = ({
         {isError && (
           <div className="w-full flex items-center justify-center mb-6 mt-3 py-2 px-2 rounded-md bg-red-200 bg-opacity-70 mt-8">
             <small className="capitalize text-red-700 font-semibold text-center">
-              {error}
+              {typeof error === "string" ? error : JSON.stringify(error)}
             </small>
           </div>
         )}

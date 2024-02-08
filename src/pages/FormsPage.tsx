@@ -16,11 +16,10 @@ import PortalWrapper from "../components/PortalWrapper";
 import OrderSummeryModal from "../components/OrderSummeryModal";
 import { calculateTotalPrice } from "../utils";
 import { CheckoutInitialData, Tiers } from "../../types";
-import useTickets, { tiersOptionsType } from "../hooks/useTickets";
+import useTickets from "../hooks/useTickets";
 import useWorkspaces from "../hooks/useWorkspaces";
 import useMentorship from "../hooks/useMentorship";
 import { startDate, startTime } from "../constants/inddex";
-import { SingleValue } from "react-select";
 const FormsPage = () => {
   const [currentForm, setCurrentForm] = useState<
     "FORM-EVENT-ONE" | "FORM-EVENT-TWO"
