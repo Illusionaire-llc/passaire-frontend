@@ -1,7 +1,7 @@
 import React from "react";
 import { IoIosSend } from "react-icons/io";
 import { MdOutlineCleaningServices } from "react-icons/md";
-import { FaLink } from "react-icons/fa";
+// import { FaLink } from "react-icons/fa";
 import InputWrapper from "./InputWrapper";
 import Select, { SingleValue } from "react-select";
 import { tiersOptionsType } from "../hooks/useTickets";
@@ -21,7 +21,7 @@ const EventFormTwo = ({
   onSubmit,
   handleSelectTicket,
   isLoadingTiers,
-  setCurrentForm,
+  // setCurrentForm,
   ticketsOptions,
 }: Props) => {
   return (
