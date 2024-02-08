@@ -136,7 +136,8 @@ const FormsPage = () => {
         buyer: {
           _id: null,
           email: checkoutFormData?.email,
-          name: `${checkoutFormData?.fullName}-(${checkoutFormData.company})`,
+          // name: `${checkoutFormData?.fullName}-(${checkoutFormData.company})`,
+          name: checkoutFormData?.fullName,
           phone: checkoutFormData?.phoneNumber,
         },
         order_items: [

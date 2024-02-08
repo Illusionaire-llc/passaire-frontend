@@ -207,7 +207,7 @@ const EventFormTwo = ({
           <span className="text-2xl">
             <IoIosSend />
           </span>
-          <p>checkout</p>
+          <p>Registration Form</p>
         </button>
         <button
           type="reset"
