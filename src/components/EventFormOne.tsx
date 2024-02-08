@@ -1,7 +1,5 @@
 import React from "react";
 import { IoIosSend } from "react-icons/io";
-import { MdOutlineCleaningServices } from "react-icons/md";
-import { FaLink } from "react-icons/fa";
 import Select, { MultiValue, SingleValue } from "react-select";
 import InputWrapper from "./InputWrapper";
 import { tiersOptionsType } from "../hooks/useTickets";
@@ -39,16 +37,12 @@ type Props = {
 };
 const EventFormOne = ({
   onSubmit,
-  setCurrentForm,
-  handleSelectTicket,
   handleSelectWorkshop,
   handleSelectMentorship,
-  isLoadingTiers,
   isLoadingWorkspace,
   isLoadingMentorship,
   isFetchedMentorship,
   isFetchedWorkspace,
-  ticketsOptions,
   workspaceOptions,
   mentorshipOptions,
   selectedMentorshipValue,
@@ -133,9 +127,11 @@ const EventFormOne = ({
           />
         </InputWrapper>
       </div>
-      <div className="w-full max-md:flex-col flex items-center justify-center gap-6">
+      <div className="w-full max-md:flex-col flex items-center justify-start gap-6">
         {/* start select elements */}
-        <InputWrapper dir="column">
+        {/* hide ticket type with display:none class */}
+        {/* start ticket type select element */}
+        {/* <InputWrapper dir="column" className="hidden">
           <label
             htmlFor="ticketType"
             className="text-zinc-700 font-medium capitalize"
@@ -156,7 +152,8 @@ const EventFormOne = ({
             }
             className="w-full border hover:border-secondary-100 focus:outline-none"
           />
-        </InputWrapper>
+        </InputWrapper> */}
+        {/* end ticket type select element */}
         <InputWrapper dir="column">
           <label
             htmlFor="workshop"
@@ -185,8 +182,6 @@ const EventFormOne = ({
           />
         </InputWrapper>
         {/* end select elements */}
-      </div>
-      <div className="w-full max-md:flex-col md:flex-row-reverse flex items-center justify-center gap-6">
         <InputWrapper dir="column">
           <label
             htmlFor="mentorship"
@@ -212,6 +207,8 @@ const EventFormOne = ({
             className="w-full border hover:border-secondary-100 focus:outline-none"
           />
         </InputWrapper>
+      </div>
+      <div className="w-full max-md:flex-col md:flex-row-reverse flex items-center justify-end max-md:justify-center gap-6">
         <InputWrapper dir="column">
           <label
             htmlFor="eventsDate"

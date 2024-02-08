@@ -15,12 +15,11 @@ import {
 import PortalWrapper from "../components/PortalWrapper";
 import OrderSummeryModal from "../components/OrderSummeryModal";
 import { calculateTotalPrice } from "../utils";
-import { CheckoutInitialData } from "../../types";
-import useTickets, { tiersOptionsType } from "../hooks/useTickets";
+import { CheckoutInitialData, Tiers } from "../../types";
+import useTickets from "../hooks/useTickets";
 import useWorkspaces from "../hooks/useWorkspaces";
 import useMentorship from "../hooks/useMentorship";
 import { startDate, startTime } from "../constants/inddex";
-import { SingleValue } from "react-select";
 const FormsPage = () => {
   const [currentForm, setCurrentForm] = useState<
     "FORM-EVENT-ONE" | "FORM-EVENT-TWO"
@@ -78,9 +77,14 @@ const FormsPage = () => {
     useState<CheckoutInitialData | null>(null);
 
   const handlePrice = () => {
-    const ticket = tiersList?.find(
-      (ticket) => ticket._id === selectedTicket?.value
-    );
+    let ticket: Tiers | undefined;
+    if (!tiersList) throw new Error(`Could not find tickets list ${tiersList}`);
+    if (selectedTicket) {
+      ticket = tiersList?.find(
+        (ticket) => ticket._id === selectedTicket?.value
+      );
+    }
+    ticket = tiersList[0];
     if (!ticket) throw new Error(`Could not find ticket ${selectedTicket}`);
     const totalPrice = calculateTotalPrice({
       price: ticket.price,
@@ -178,7 +182,12 @@ const FormsPage = () => {
     );
   };
   const handleSubmit = async () => {
-    const tier = tiersList?.find((tier) => tier._id === selectedTicket?.value);
+    let tier: Tiers | undefined;
+    if (selectedTicket) {
+      tier = tiersList?.find((tier) => tier._id === selectedTicket?.value);
+    } else {
+      tier = tiersList?.find((tier) => tier._id === tiersList[0]._id);
+    }
     const calculatedStartDate = new Date(
       `${startDate} ${startTime}`
     ).toISOString();
@@ -204,11 +213,11 @@ const FormsPage = () => {
           <div className="relative w-[40%] max-tablet:w-[50%] max-md:w-full min-h-full max-md:h-[40dvh] md:h-[90dvh] max-md:min-h-[40%] flex items-center justify-center bg-gray-500 rounded-l-md overflow-hidden max-md:rounded-t-md max-md:rounded-l-none animate-pulse"></div>
         )}
         {isFetchedBusinessImage && (
-          <figure className="relative w-[40%] max-tablet:w-[50%] max-md:w-full min-h-full h-full max-md:min-h-[40%] max-md:h-[40%] flex items-center justify-center rounded-l-md overflow-hidden max-md:rounded-t-md max-md:rounded-l-none">
+          <figure className="relative w-[40%] max-tablet:w-[50%] md:h-[90dvh] max-md:w-full min-h-full h-full max-md:min-h-[40%] max-md:h-[40%] flex items-center justify-center rounded-l-md overflow-hidden max-md:rounded-t-md max-md:rounded-l-none">
             <img
               src={businessImage?.logo_link}
               alt="event-reservation.jpg"
-              className="w-full h-full min-h-full object-cover object-center"
+              className="w-full h-full object-cover object-center"
             />
             <span className="absolute bottom-0 left-0 w-full h-[45%] max-md:h-[70%] flex flex-col gap-4 px-8 py-10 bg-gradient-to-t from-secondary-200">
               {/* <h4 className="text-3xl text-white font-semibold text-center mt-12">
@@ -224,7 +233,7 @@ const FormsPage = () => {
         )}
         <div className="w-[60%] max-md:w-full max-md:h-[60%] flex flex-col px-6 py-8">
           <h3 className="text-2xl font-semibold uppercase mb-6 text-center">
-            Registration Form
+            registration
           </h3>
           {currentForm === "FORM-EVENT-ONE" && (
             <EventFormOne
