@@ -217,7 +217,7 @@ const EventFormTwo = ({
           <p>reset</p>
         </button>
       </div>
-      <button
+      {/* <button
         type="button"
         className="flex items-center justify-center gap-3 underline text-slate-800 mx-auto pt-3 capitalize"
         onClick={() => setCurrentForm("FORM-EVENT-ONE")}
@@ -226,7 +226,7 @@ const EventFormTwo = ({
           <FaLink />
         </span>
         <p>change event form</p>
-      </button>
+      </button> */}
     </form>
   );
 };

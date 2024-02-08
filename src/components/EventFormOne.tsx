@@ -277,20 +277,20 @@ const EventFormOne = ({
           <>
             <button
               type="submit"
-              className="w-1/2 max-xs:w-full flex items-center justify-center gap-4 px-4 py-2 bg-gradient-to-tr from-secondary-100 to-secondary-200 text-white font-semibold capitalize rounded-md hover:brightness-125"
+              className="w-full max-xs:w-full flex items-center justify-center gap-4 px-4 py-2 bg-gradient-to-tr from-secondary-100 to-secondary-200 text-white font-semibold capitalize rounded-md hover:brightness-125"
             >
               <span className="text-2xl">
                 <IoIosSend />
               </span>
               <p>done</p>
             </button>
-            <button
+            {/* <button
               type="reset"
               className="w-1/2 max-xs:w-full flex items-center justify-center gap-4 px-4 py-2 bg-red-200 text-red-800 font-semibold capitalize rounded-md hover:brightness-125"
             >
               <MdOutlineCleaningServices />
               <p>reset</p>
-            </button>
+            </button> */}
           </>
         ) : (
           <small className="py-3 px-4 rounded-md shadow-md bg-yellow-300 capitalize font-semibold text-yellow-800 bg-opacity-70">
@@ -299,7 +299,7 @@ const EventFormOne = ({
           </small>
         )}
       </div>
-      <button
+      {/* <button
         type="button"
         className="flex items-center justify-center gap-3 underline text-slate-800 mx-auto pt-3 capitalize"
         onClick={() => setCurrentForm("FORM-EVENT-TWO")}
@@ -308,7 +308,7 @@ const EventFormOne = ({
           <FaLink />
         </span>
         <p>change event form</p>
-      </button>
+      </button> */}
     </form>
   );
 };
