@@ -16,10 +16,11 @@ import PortalWrapper from "../components/PortalWrapper";
 import OrderSummeryModal from "../components/OrderSummeryModal";
 import { calculateTotalPrice } from "../utils";
 import { CheckoutInitialData } from "../../types";
-import useTickets from "../hooks/useTickets";
+import useTickets, { tiersOptionsType } from "../hooks/useTickets";
 import useWorkspaces from "../hooks/useWorkspaces";
 import useMentorship from "../hooks/useMentorship";
 import { startDate, startTime } from "../constants/inddex";
+import { SingleValue } from "react-select";
 const FormsPage = () => {
   const [currentForm, setCurrentForm] = useState<
     "FORM-EVENT-ONE" | "FORM-EVENT-TWO"
@@ -94,7 +95,8 @@ const FormsPage = () => {
     ev.preventDefault();
     const fd = new FormData(ev.currentTarget);
     const data = {
-      fullName: fd.get("fullName") as string,
+      firstName: fd.get("firstName") as string,
+      lastName: fd.get("lastName") as string,
       email: fd.get("email") as string,
       phoneNumber: fd.get("phoneNumber") as string,
       company: fd.get("company") as string,
@@ -118,26 +120,32 @@ const FormsPage = () => {
     anchor.href = `${BASE_URL}${ENDPOINTS.orders.payment}${tenantID}/${orderId}/`;
     anchor.click();
   };
-  const handleSubmit = async () => {
-    if (!checkoutFormData)
-      throw new Error(`Please enter your checkout data first then submit`);
-    if (!selectedTicket)
-      throw new Error(`Please enter your ticket first then submit`);
-    const tier = tiersList?.find((tier) => tier._id === selectedTicket?.value);
 
-    const calculatedStartDate = new Date(
-      `${startDate} ${startTime}`
-    ).toISOString();
-    const endDate = calculateEndTime(checkoutFormData.eventsDate);
-
-    if (!tier) throw new Error(`Invalid tier name`);
+  const sendData = ({
+    checkoutFormData,
+    date_expire,
+    date_start,
+    mentorship_ids,
+    workshop_ids,
+    ticket_price,
+    ticket_name,
+    ticket_id,
+  }: {
+    checkoutFormData: CheckoutInitialData;
+    date_start: string;
+    date_expire: string;
+    ticket_id: string;
+    ticket_name: string;
+    ticket_price: number;
+    workshop_ids: Array<string>;
+    mentorship_ids: Array<string>;
+  }) => {
     mutateAsyncCheckout(
       {
         buyer: {
           _id: null,
           email: checkoutFormData?.email,
-          // name: `${checkoutFormData?.fullName}-(${checkoutFormData.company})`,
-          name: checkoutFormData?.fullName,
+          name: `${checkoutFormData?.firstName} ${checkoutFormData?.lastName}`,
           phone: checkoutFormData?.phoneNumber,
         },
         order_items: [
@@ -145,24 +153,20 @@ const FormsPage = () => {
             customer: {
               _id: null,
               email: checkoutFormData?.email,
-              name: `${checkoutFormData?.fullName}-(${checkoutFormData.company})`,
+              name: `${checkoutFormData?.firstName} ${checkoutFormData.lastName}`,
               phone: checkoutFormData?.phoneNumber,
             },
-            ticket_tier_id: selectedTicket?.value,
-            ticket_tier_name: tier?.name,
-            date_start: calculatedStartDate,
-            date_expire: endDate,
+            ticket_tier_id: ticket_id,
+            ticket_tier_name: ticket_name,
+            date_start: date_start,
+            date_expire: date_expire,
             ticket_id: null,
-            ticket_tier_price: tier.price,
-            workshop_ids: [
-      ...selectedWorkshop.map((workshop) => workshop.value),
-      ...selectedMentorship.map((mentorship) => mentorship.value),
-    ],
+            ticket_tier_price: ticket_price,
+            workshop_ids: [...workshop_ids, ...mentorship_ids],
           },
         ],
-        // payment_method: checkoutFormData.paymentMethod,
         payment_method: "free",
-        promocode: checkoutFormData.promoCode,
+        promocode: "",
         venue_id: venueID,
       },
       {
@@ -172,6 +176,25 @@ const FormsPage = () => {
         },
       }
     );
+  };
+  const handleSubmit = async () => {
+    const tier = tiersList?.find((tier) => tier._id === selectedTicket?.value);
+    const calculatedStartDate = new Date(
+      `${startDate} ${startTime}`
+    ).toISOString();
+    if (checkoutFormData) {
+      const endDate = calculateEndTime(checkoutFormData.eventsDate);
+      sendData({
+        checkoutFormData: checkoutFormData,
+        date_expire: endDate,
+        date_start: calculatedStartDate,
+        mentorship_ids: selectedMentorship.map((mentor) => mentor.value),
+        workshop_ids: selectedWorkshop.map((w) => w.value),
+        ticket_id: tier?._id as string,
+        ticket_name: tier?.name as string,
+        ticket_price: tier?.price as number,
+      });
+    }
   };
 
   return (

@@ -2,12 +2,15 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import FormsPage from "./pages/FormsPage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { tenantID } from "./models";
 
 function App() {
   const [queryClient] = useState(() => new QueryClient());
 
   useEffect(() => {
-    window.document.title = import.meta.env.VITE_TENANT_ID;
+    if (tenantID) {
+      window.document.title = tenantID;
+    }
   }, []);
   return (
     <>
