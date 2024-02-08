@@ -214,7 +214,7 @@ const EventFormOne = ({
             className="w-full border hover:border-secondary-100 focus:outline-none"
           />
         </InputWrapper>
-        <InputWrapper dir="column">
+        {/* <InputWrapper dir="column">
           <label
             htmlFor="company"
             className="text-zinc-700 font-medium capitalize"
@@ -228,7 +228,7 @@ const EventFormOne = ({
             className="w-full px-3 py-2 border hover:border-secondary-100 focus:outline-none"
             placeholder="enter company ..."
           />
-        </InputWrapper>
+        </InputWrapper> */}
       </div>
       {/* <div className="flex max-xs:flex-col max-xs:items-start items-center justify-start gap-6 max-xs:gap-2">
         <label htmlFor="" className="font-medium capitalize">

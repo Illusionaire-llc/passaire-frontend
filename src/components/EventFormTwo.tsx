@@ -144,7 +144,7 @@ const EventFormTwo = ({
         {/* end select elements */}
       </div>
       <div className="w-full max-md:flex-col flex items-center justify-center gap-6">
-        <InputWrapper dir="column" className="me-auto">
+        {/* <InputWrapper dir="column" className="me-auto">
           <label
             htmlFor="promoCode"
             className="text-zinc-700 font-medium capitalize"
@@ -158,7 +158,7 @@ const EventFormTwo = ({
             className="w-full px-3 py-2 border hover:border-secondary-100 focus:outline-none"
             placeholder="enter promo code ..."
           />
-        </InputWrapper>
+        </InputWrapper> */}
       </div>
       {/* <div className="flex max-xs:flex-col max-xs:items-start items-center justify-start gap-6 max-xs:gap-2">
         <label htmlFor="" className="font-medium capitalize">
