@@ -4,7 +4,8 @@ import Select, { MultiValue, SingleValue } from "react-select";
 import InputWrapper from "./InputWrapper";
 import { tiersOptionsType } from "../hooks/useTickets";
 import { MentorshipOptionsType } from "../hooks/useMentorship";
-import { startDate } from "../constants/inddex";
+import { startDate } from "../constants";
+import Button from "./Button";
 
 type WorkspaceOptionsType = {
   label: string;
@@ -279,37 +280,51 @@ const EventFormOne = ({
           </span>
         </div>
       </div> */}
-      {isEmptyMentorship && isEmptyWorkshop && (
-        <div className="w-full flex items-center justify-center gap-3 px-3 py-2 mt-2 mb-1">
-          <IoIosWarning className="text-2xl text-red-500" />
-          <small className="font-bold capitalize text-red-700">
-            please select at least one of mentorship's or one of workshop's
-          </small>
-        </div>
-      )}
-      <div className="w-full max-xs:flex-col flex gap-3 mt-4">
+      {isEmptyMentorship &&
+        isEmptyWorkshop &&
+        !isLoadingMentorship &&
+        !isLoadingWorkspace && (
+          <div className="w-full flex items-center justify-center gap-3 px-3 py-2 mt-2 mb-1">
+            <IoIosWarning className="text-2xl text-red-500" />
+            <small className="font-bold capitalize text-red-700">
+              please select at least one of mentorship's or one of workshop's
+            </small>
+          </div>
+        )}
+      <div
+        className={`w-full max-xs:flex-col flex gap-3 mt-4 ${
+          isLoadingMentorship || isLoadingWorkspace
+            ? "h-10 rounded-md animate-pulse bg-slate-400"
+            : ""
+        }`}
+      >
         {isFetchedMentorship &&
-        isFetchedWorkspace &&
-        workspaceOptions &&
-        workspaceOptions?.length >= 1 ? (
-          <>
-            <button
+          isFetchedWorkspace &&
+          workspaceOptions &&
+          workspaceOptions?.length >= 1 &&
+          !isLoadingMentorship &&
+          !isLoadingMentorship && (
+            <Button
               type="submit"
-              className="w-full max-xs:w-full flex items-center justify-center gap-4 px-4 py-2 bg-gradient-to-tr from-secondary-100 to-secondary-200 text-white font-semibold capitalize rounded-md hover:brightness-125 disabled:from-slate-400 disabled:to-slate-300 disabled:cursor-not-allowed"
+              className="bg-gradient-to-tr from-secondary-100 to-secondary-200 text-white"
               disabled={isEmptyMentorship && isEmptyWorkshop}
             >
               <span className="text-2xl">
                 <IoIosSend />
               </span>
               <p>done</p>
-            </button>
-          </>
-        ) : (
-          <small className="py-3 px-4 rounded-md shadow-md bg-yellow-300 capitalize font-semibold text-yellow-800 bg-opacity-70">
-            sorry, but you cant register now because there is no workspaces or
-            Mentorships available.
-          </small>
-        )}
+            </Button>
+          )}
+
+        {isFetchedMentorship &&
+          isFetchedWorkspace &&
+          workspaceOptions &&
+          workspaceOptions?.length <= 0 && (
+            <small className="py-3 px-4 mx-auto rounded-md shadow-md bg-yellow-300 capitalize font-semibold text-yellow-800 bg-opacity-70">
+              sorry, but you cant register now because there is no workspaces or
+              Mentorship available.
+            </small>
+          )}
       </div>
       {/* <button
         type="button"

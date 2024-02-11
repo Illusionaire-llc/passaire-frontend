@@ -1,5 +1,4 @@
-import { FormEvent, useState } from "react";
-// import eventReservation from "../assets/event-reservation.jpg";
+import { FormEvent, useCallback, useMemo, useState } from "react";
 import EventFormOne from "../components/EventFormOne";
 import EventFormTwo from "../components/EventFormTwo";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -19,7 +18,7 @@ import { CheckoutInitialData, Tiers } from "../../types";
 import useTickets from "../hooks/useTickets";
 import useWorkspaces from "../hooks/useWorkspaces";
 import useMentorship from "../hooks/useMentorship";
-import { startDate, startTime } from "../constants/inddex";
+import { startDate, startTime } from "../constants/index";
 const FormsPage = () => {
   const [currentForm, setCurrentForm] = useState<
     "FORM-EVENT-ONE" | "FORM-EVENT-TWO"
@@ -76,55 +75,30 @@ const FormsPage = () => {
   const [checkoutFormData, setCheckoutFormData] =
     useState<CheckoutInitialData | null>(null);
 
-  const handlePrice = () => {
-    let ticket: Tiers | undefined;
-    if (!tiersList) throw new Error(`Could not find tickets list ${tiersList}`);
-    if (selectedTicket) {
-      ticket = tiersList?.find(
-        (ticket) => ticket._id === selectedTicket?.value
-      );
-    }
-    ticket = tiersList[0];
-    if (!ticket) throw new Error(`Could not find ticket ${selectedTicket}`);
-    const totalPrice = calculateTotalPrice({
-      price: ticket.price,
-      quantity: 1,
-    });
-    setTotalPrice(totalPrice);
-    setTicketsQuantity(1);
-    setTicketsPrice(ticket.price);
-  };
+  const handlePrice = useCallback(
+    (ticket: Tiers) => {
+      const totalPrice = calculateTotalPrice({
+        price: ticket.price,
+        quantity: 1,
+      });
+      setTotalPrice(totalPrice);
+      setTicketsQuantity(1);
+      setTicketsPrice(ticket.price);
+    },
+    [tiersList, selectedTicket]
+  );
+  const handleGetCurrentTicket = useMemo(() => {
+    const ticket =
+      tiersList?.find((ticket) => ticket._id === selectedTicket?.value) ||
+      tiersList?.[0];
 
-  const handlePay = (ev: FormEvent<HTMLFormElement>) => {
-    ev.preventDefault();
-    const fd = new FormData(ev.currentTarget);
-    const data = {
-      firstName: fd.get("firstName") as string,
-      lastName: fd.get("lastName") as string,
-      email: fd.get("email") as string,
-      phoneNumber: fd.get("phoneNumber") as string,
-      company: fd.get("company") as string,
-      ticketType: fd.get("ticketType") as string,
-      workspace: fd.get("workspace") as string,
-      paymentMethod: fd.get("paymentMethod") as string,
-      eventsDate: fd.get("eventsDate") as string,
-      numberOfTickets: Number(fd.get("numberOfTickets")),
-      promoCode: fd.get("promoCode") as string,
-    };
-    handlePrice();
-    if (!data)
-      throw new Error(
-        `there is no available data received from form submission`
-      );
-    setIsShownPaymentModal(true);
-    setCheckoutFormData(data);
-  };
+    return ticket;
+  }, [tiersList, selectedTicket]);
   const handleRedirect = (orderId: string) => {
     const anchor = document.createElement("a");
     anchor.href = `${BASE_URL}${ENDPOINTS.orders.payment}${tenantID}/${orderId}/`;
     anchor.click();
   };
-
   const sendData = ({
     checkoutFormData,
     date_expire,
@@ -181,7 +155,35 @@ const FormsPage = () => {
       }
     );
   };
-  const handleSubmit = async () => {
+  const handleGetData = (ev: FormEvent<HTMLFormElement>) => {
+    ev.preventDefault();
+    const fd = new FormData(ev.currentTarget);
+    const data = {
+      firstName: fd.get("firstName") as string,
+      lastName: fd.get("lastName") as string,
+      email: fd.get("email") as string,
+      phoneNumber: fd.get("phoneNumber") as string,
+      company: fd.get("company") as string,
+      ticketType: fd.get("ticketType") as string,
+      workspace: fd.get("workspace") as string,
+      paymentMethod: fd.get("paymentMethod") as string,
+      eventsDate: fd.get("eventsDate") as string,
+      numberOfTickets: Number(fd.get("numberOfTickets")),
+      promoCode: fd.get("promoCode") as string,
+    };
+
+    const ticket = handleGetCurrentTicket;
+    if (!ticket) throw new Error("Please select a ticket");
+
+    handlePrice(ticket);
+    if (!data)
+      throw new Error(
+        `there is no available data received from form submission`
+      );
+    setIsShownPaymentModal(true);
+    setCheckoutFormData(data);
+  };
+  const handleRegister = async () => {
     let tier: Tiers | undefined;
     if (selectedTicket) {
       tier = tiersList?.find((tier) => tier._id === selectedTicket?.value);
@@ -205,7 +207,6 @@ const FormsPage = () => {
       });
     }
   };
-
   return (
     <main className="relative w-full h-dvh flex items-center justify-center bg-slate-900">
       <div className="w-[68%] max-lg:w-[90%] max-tablet:w-[95%] max-md:w-[85%] max-md:flex-col max-md:h-[90dvh] max-md:overflow-y-auto flex items-center max-md:items-center justify-start max-md:justify-center bg-gray-100 rounded-lg transition-transform duration-500 shadow-xl hover:scale-105">
@@ -237,7 +238,7 @@ const FormsPage = () => {
           </h3>
           {currentForm === "FORM-EVENT-ONE" && (
             <EventFormOne
-              onSubmit={handlePay}
+              onSubmit={handleGetData}
               setCurrentForm={setCurrentForm}
               isFetchedTiers={isFetchedTiers}
               isLoadingTiers={isLoadingTiers}
@@ -257,7 +258,7 @@ const FormsPage = () => {
           )}
           {currentForm === "FORM-EVENT-TWO" && (
             <EventFormTwo
-              onSubmit={handlePay}
+              onSubmit={handleRegister}
               setCurrentForm={setCurrentForm}
               isFetchedTiers={isFetchedTiers}
               isLoadingTiers={isLoadingTiers}
@@ -278,7 +279,7 @@ const FormsPage = () => {
             setClose={() => setIsShownPaymentModal(false)}
             isError={isErrorCheckout}
             error={errorCheckout}
-            submitHandler={() => handleSubmit()}
+            submitHandler={() => handleRegister()}
           />
         </PortalWrapper>
       )}
