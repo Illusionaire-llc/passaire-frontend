@@ -5,7 +5,7 @@ import { FaLink } from "react-icons/fa";
 import InputWrapper from "./InputWrapper";
 import Select, { SingleValue } from "react-select";
 import { tiersOptionsType } from "../hooks/useTickets";
-import { startDate } from "../constants/inddex";
+import { startDate } from "../constants";
 
 type Props = {
   onSubmit?: React.FormEventHandler<HTMLFormElement> | undefined;
