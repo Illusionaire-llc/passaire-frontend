@@ -169,7 +169,7 @@ const FormsPage = () => {
             workshop_ids: [...workshop_ids, ...mentorship_ids],
           },
         ],
-        payment_method: "free",
+        payment_method: checkoutFormData.paymentMethod,
         promocode: "",
         venue_id: venueID,
       },

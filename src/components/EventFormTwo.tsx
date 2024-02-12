@@ -160,7 +160,7 @@ const EventFormTwo = ({
           />
         </InputWrapper>
       </div>
-      {/* <div className="flex max-xs:flex-col max-xs:items-start items-center justify-start gap-6 max-xs:gap-2">
+      <div className="flex max-xs:flex-col max-xs:items-start items-center justify-start gap-6 max-xs:gap-2">
         <label htmlFor="" className="font-medium capitalize">
           payment method
         </label>
@@ -198,7 +198,7 @@ const EventFormTwo = ({
             </label>
           </span>
         </div>
-      </div> */}
+      </div>
       <div className="w-full max-xs:flex-col flex gap-3 mt-4">
         <button
           type="submit"
