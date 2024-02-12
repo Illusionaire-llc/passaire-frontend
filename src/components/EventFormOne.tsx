@@ -282,14 +282,14 @@ const EventFormOne = ({
           </span>
         </div>
       </div>
-      {/* {isEmptyMentorship && isEmptyWorkshop && (
+      {isEmptyMentorship && isEmptyWorkshop && (
         <div className="w-full flex items-center justify-center gap-3 px-3 py-2 mt-2 mb-1">
           <IoIosWarning className="text-2xl text-red-500" />
           <small className="font-bold capitalize text-red-700">
             please select at least one of mentorships or one of workshops
           </small>
         </div>
-      )} */}
+      )}
       <div className="w-full max-xs:flex-col flex gap-3 mt-4">
         {isFetchedMentorship &&
         isFetchedWorkspace &&
