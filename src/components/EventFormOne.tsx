@@ -4,7 +4,7 @@ import Select, { MultiValue, SingleValue } from "react-select";
 import InputWrapper from "./InputWrapper";
 import { tiersOptionsType } from "../hooks/useTickets";
 import { MentorshipOptionsType } from "../hooks/useMentorship";
-import { startDate } from "../constants/inddex";
+import { mustHaveWorkshop, startDate } from "../constants/inddex";
 
 type WorkspaceOptionsType = {
   label: string;
@@ -294,7 +294,7 @@ const EventFormOne = ({
         {isFetchedMentorship &&
         isFetchedWorkspace &&
         workspaceOptions &&
-        workspaceOptions?.length >= 0 ? (
+        workspaceOptions?.length >= 0 || !mustHaveWorkshop  ? ( 
           <>
             <button
               type="submit"
