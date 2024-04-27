@@ -1,24 +1,21 @@
-import { useEffect, useState } from "react";
-import "./App.css";
-import FormsPage from "./pages/FormsPage";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { tenantID } from "./models";
+
+import WorkshopSelection from "./Pages/WorkshopSelection/WorkshopSelection.tsx";
+import {useGlobalContext} from "./Components/GlobalCTX.tsx";
+import TicketVerification from "./Pages/TicketVerification.tsx";
+import Receipt from "./Pages/Receipt.tsx";
 
 function App() {
-  const [queryClient] = useState(() => new QueryClient());
+   const {isTicketVerified, workshopDataSaved} = useGlobalContext()
 
-  useEffect(() => {
-    if (tenantID) {
-      window.document.title = tenantID;
-    }
-  }, []);
-  return (
-    <>
-      <QueryClientProvider client={queryClient}>
-        <FormsPage />
-      </QueryClientProvider>
-    </>
-  );
+    return (
+
+        <main className={"flex justify-center items-center w-full h-full bg-blue-900 "}>
+            {workshopDataSaved ? <Receipt/>
+                : !isTicketVerified ? <TicketVerification/>
+                    : <WorkshopSelection/>
+            }
+        </main>
+    )
 }
 
-export default App;
+export default App
