@@ -21,15 +21,13 @@ export const ENDPOINTS = {
   preLogin: "/business/prelogin/",
 };
 
-
 // export const venueID =
 //   import.meta.env.VITE_VENUE_ID || "65c40432f81716c33f256691";
-// Get venue id rom the URL
-export const venueID = window.location.pathname.split("/")[2] || "65c40432f81716c33f256691";
+// Get venue id rom the URL query params
+export const venueID = window.location.hash.split('#')[2] || "65c40432f81716c33f256691";
 // export const tenantID = import.meta.env.VITE_TENANT_ID || "techshift";
 // Get tenant id from the URL
-export const tenantID = window.location.pathname.split("/")[1] || "techshift";
-
+export const tenantID = window.location.hash.split('#')[1] || "techshift";
 // Console log the venueID and tenantID
 console.log(venueID, tenantID);
 
