@@ -1,5 +1,6 @@
-import React, {createContext, FormEvent, useContext, useState} from 'react';
+import React, {createContext, FormEvent, useContext, useEffect, useState} from 'react';
 import {BASE_URL, ENDPOINTS, tenantID, venueID} from "../Utils/apiEndpoints.ts";
+import { useWindowResize} from "../Utils/useWindowResize.ts";
 
 export type globalCTXType = {
     ticketID : string | null
@@ -11,7 +12,8 @@ export type globalCTXType = {
     availableWorkshops : Workshop[],
     handleWorkshopsSelection: (workShopID: string) => void
     saveWorkshopData: () => void,
-    verifyTicketID: (ev: FormEvent<HTMLFormElement>) => void
+    verifyTicketID: (ev: FormEvent<HTMLFormElement>) => void,
+    isMobile: boolean
 }
 
 export type Workshop = {
@@ -42,8 +44,10 @@ const GlobalCtx: React.FC<{ children: React.ReactNode }> = ({children}) => {
     const [availableWorkshops, setAvailableWorkshops] = useState<Workshop[]>([])
     const [selectedWorkshopIDs, setSelectedWorkshopIDs] = useState<string[]>([]);
     const [workshopDataSaved, setWorkshopDataSaved] = useState<boolean>(false)
+    const [isMobile, setIsMobile] = useState<boolean>(false)
     const [loading, setLoading] = useState<boolean>(false)
     const [errorMsg, setErrorMsg] = useState<string|null>(null)
+    const [windowWidth , _] = useWindowResize()
     const handleWorkshopsSelection = (WorkshopID: string) => {
         const WorkshopExists = selectedWorkshopIDs.find(workshopID => WorkshopID === workshopID);
         if (WorkshopExists) {
@@ -126,6 +130,11 @@ const GlobalCtx: React.FC<{ children: React.ReactNode }> = ({children}) => {
         }
     }
 
+
+    useEffect(() => {
+        if(windowWidth<768) setIsMobile(true)
+        else setIsMobile(false)
+    }, [windowWidth]);
     return (
         <GlobalContext.Provider value={{
             ticketID,
@@ -135,9 +144,10 @@ const GlobalCtx: React.FC<{ children: React.ReactNode }> = ({children}) => {
             workshopDataSaved,
             selectedWorkshopIDs,
             availableWorkshops,
+            isMobile,
             handleWorkshopsSelection,
             saveWorkshopData,
-            verifyTicketID
+            verifyTicketID,
         }}>
             {children}
         </GlobalContext.Provider>

@@ -12,7 +12,13 @@ const WorkshopsGrid = () => {
     return (
         <>
             <div
-                className={`grid grid-cols-${Math.min(availableWorkshops.length, 2)} md:grid-cols-${Math.min(availableWorkshops.length, 3)} grid-rows-${Math.ceil(availableWorkshops.length / 3)} place-items-center gap-4 w-full h-full overflow-auto`}>
+                style={{
+                    gridTemplateColumns: `repeat(${Math.min(availableWorkshops.length, 3)} ,minmax(0,1fr)`,
+                        ...(window.innerWidth<768) && {
+                            gridTemplateColumns: `unset`,
+                        }
+                }}
+                className={`grid place-items-center gap-4 w-full h-fit overflow-auto`}>
                 {
                     availableWorkshops.map((workshopData: Workshop) => (
                         <WorkshopCard key={workshopData.id}

@@ -9,16 +9,19 @@ const Receipt = () => {
                 <h1 className={"text-5xl text-center font-light"}>Your <b className={"text-blue-400"}>Workshops</b> are now saved !</h1>
                 <h2 className={"text-3xl text-center font-light"}>We're looking forward to seeing you &#128513; </h2>
             </section>
-            <section className={"border-white  p-6 rounded-2xl bg-blue-800  grid gap-5"}>
+            <section className={"border-white  p-6 rounded-2xl bg-blue-800 w-1/2  grid gap-5"}>
                 <h2 className={"text-3xl font-light"}>Ticket details : </h2>
-                <div className={"grid gap-2"} >
-                    <h3 className={"text-lg font-bold"}><span className={"text-2xl text-blue-200"}>Your Ticket id :</span> {ticketID}</h3>
-                    <h3 className={"text-2xl text-blue-200 font-bold"}>Your selected Workshops : </h3>
-                    {
-                        availableWorkshops.filter((workshop) => selectedWorkshopIDs.includes(workshop.id)).map((workshop, index) => (
-                            <h3 className={"font-bold"} key={workshop.id}>{index + 1} - {workshop.name}</h3>
-                        ))
-                    }
+                <div className={"grid gap-2"}>
+                    <h3 className={"text-2xl text-blue-200"}>Your Ticket id : <span className={"text-white text-lg"}>{ticketID}</span></h3>
+
+                    <h3 className={"text-2xl text-blue-200"}>Your selected Workshops : </h3>
+                    <div className={"grid gap-2 p-4"}>
+                        {
+                            availableWorkshops.filter((workshop) => selectedWorkshopIDs.includes(workshop.id)).map((workshop) => (
+                                <h3  key={workshop.id}>{workshop.name}</h3>
+                            ))
+                        }
+                    </div>
                 </div>
             </section>
         </article>
