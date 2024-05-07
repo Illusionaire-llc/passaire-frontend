@@ -2,19 +2,6 @@ import React, {createContext, FormEvent, useContext, useEffect, useState} from '
 import {BASE_URL, ENDPOINTS, tenantID, venueID} from "../Utils/apiEndpoints.ts";
 import { useWindowResize} from "../Utils/useWindowResize.ts";
 
-export type globalCTXType = {
-    ticketID : string | null
-    isTicketVerified : boolean
-    workshopDataSaved: boolean,
-    loading:boolean,
-    errorMsg : string|null,
-    selectedWorkshopIDs: string[],
-    availableWorkshops : Workshop[],
-    handleWorkshopsSelection: (workShopID: string) => void
-    saveWorkshopData: () => void,
-    verifyTicketID: (ev: FormEvent<HTMLFormElement>) => void,
-    isMobile: boolean
-}
 
 export type Workshop = {
     "_id": "string",
@@ -35,7 +22,27 @@ export type Workshop = {
     "allowed_ticket_tiers": []
 }
 
+export type eventData = {
+    name: string,
+    logo_link: string
+}
 
+export type globalCTXType = {
+    ticketID : string | null
+    isTicketVerified : boolean
+    workshopDataSaved: boolean,
+    loading:boolean,
+    errorMsg : string|null,
+    selectedWorkshopIDs: string[],
+    availableWorkshops : Workshop[],
+    eventData : eventData | undefined
+    getEventData : () => void
+    handleWorkshopsSelection: (workShopID: string) => void
+    saveWorkshopData: () => void,
+    verifyTicketID: (ev: FormEvent<HTMLFormElement>) => void,
+    isMobile: boolean,
+
+}
 
 export const GlobalContext = createContext<globalCTXType | null>(null)
 const GlobalCtx: React.FC<{ children: React.ReactNode }> = ({children}) => {
@@ -48,6 +55,7 @@ const GlobalCtx: React.FC<{ children: React.ReactNode }> = ({children}) => {
     const [loading, setLoading] = useState<boolean>(false)
     const [errorMsg, setErrorMsg] = useState<string|null>(null)
     const [windowWidth , _] = useWindowResize()
+    const [eventData, setEventData] = useState<eventData>();
     const handleWorkshopsSelection = (WorkshopID: string) => {
         const WorkshopExists = selectedWorkshopIDs.find(workshopID => WorkshopID === workshopID);
         if (WorkshopExists) {
@@ -130,6 +138,13 @@ const GlobalCtx: React.FC<{ children: React.ReactNode }> = ({children}) => {
         }
     }
 
+    const getEventData = () => {
+        fetch("https://passapp-illusionaire-e3bd84430bf2.herokuapp.com/api/v1/business/prelogin/", {
+            headers: {
+                "tenant-id": "career-summit"
+            }
+        }).then(res => res.json()).then((data: eventData) => setEventData(data))
+    }
 
     useEffect(() => {
         if(windowWidth<768) setIsMobile(true)
@@ -145,9 +160,11 @@ const GlobalCtx: React.FC<{ children: React.ReactNode }> = ({children}) => {
             selectedWorkshopIDs,
             availableWorkshops,
             isMobile,
+            eventData,
             handleWorkshopsSelection,
             saveWorkshopData,
             verifyTicketID,
+            getEventData
         }}>
             {children}
         </GlobalContext.Provider>

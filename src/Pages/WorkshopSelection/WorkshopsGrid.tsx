@@ -3,7 +3,7 @@ import {useGlobalContext, Workshop} from "../../Components/GlobalCTX.tsx";
 
 
 const WorkshopsGrid = () => {
-    const {selectedWorkshopIDs, availableWorkshops, handleWorkshopsSelection} = useGlobalContext()
+    const {selectedWorkshopIDs, availableWorkshops , eventData, handleWorkshopsSelection} = useGlobalContext()
     const isSelected = (workshopId: string): boolean => {
         return selectedWorkshopIDs.includes(workshopId);
     }
@@ -23,7 +23,7 @@ const WorkshopsGrid = () => {
                     availableWorkshops.map((workshopData: Workshop) => (
                         <WorkshopCard key={workshopData.id}
                                       workshopId={workshopData.id}
-                                      workshopImage={workshopData.image_url}
+                                      workshopImage={workshopData.image_url !== "none" ? workshopData.image_url : eventData!.logo_link }
                                       workshopName={workshopData.name}
                                       workshopDescription={workshopData.description}
                                       onSelect={() => handleWorkshopsSelection(workshopData.id)}

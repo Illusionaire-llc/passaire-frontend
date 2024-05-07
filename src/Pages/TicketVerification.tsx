@@ -1,24 +1,15 @@
 import {useGlobalContext} from "../Components/GlobalCTX.tsx";
 import ErrorMsg from "../Components/ErrorMsg.tsx";
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import MainTitle from "../UI/MainTitle.tsx";
 
-type eventData = {
-    name: string,
-    logo_link: string
-}
+
 
 const TicketVerification = () => {
-    const [eventData, setEventData] = useState<eventData>();
-    const {verifyTicketID, loading, errorMsg} = useGlobalContext()
 
-    const getEventData = () => {
-        fetch("https://passapp-illusionaire-e3bd84430bf2.herokuapp.com/api/v1/business/prelogin/", {
-            headers: {
-                "tenant-id": "career-summit"
-            }
-        }).then(res => res.json()).then((data: eventData) => setEventData(data))
-    }
+    const {verifyTicketID, loading, errorMsg , eventData , getEventData} = useGlobalContext()
+
+
     useEffect(() => {
         getEventData()
     }, []);
