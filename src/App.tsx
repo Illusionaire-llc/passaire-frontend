@@ -9,7 +9,7 @@ function App() {
 
     return (
 
-        <main className={"flex justify-center items-center w-full h-full bg-purple-800 "}>
+        <main className={"flex justify-center items-center w-full h-full bg-purple-950 "}>
             {workshopDataSaved ? <Receipt/>
                 : !isTicketVerified ? <TicketVerification/>
                     : <WorkshopSelection/>

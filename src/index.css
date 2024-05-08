@@ -22,3 +22,40 @@ html, body, #root {
   padding: 0;
   background-color: #1a1d48;
 }
+
+/* Firefox (uncomment to work in Firefox, although other properties will not work!)  */
+/** {
+  scrollbar-width: thin;
+  scrollbar-color: #7100A8 #DFE9EB;
+}*/
+
+/* Chrome, Edge and Safari */
+*::-webkit-scrollbar {
+  height: 9px;
+  width: 9px;
+}
+*::-webkit-scrollbar-track {
+  border-radius: 5px;
+  background-color: #DFE9EB;
+}
+
+*::-webkit-scrollbar-track:hover {
+  background-color: #DFE9EB;
+}
+
+*::-webkit-scrollbar-track:active {
+  background-color: #DFE9EB;
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: #7100A8;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: #AC00FF;
+}
+
+*::-webkit-scrollbar-thumb:active {
+  background-color: #7100A8;
+}

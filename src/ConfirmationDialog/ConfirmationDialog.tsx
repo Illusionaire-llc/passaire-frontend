@@ -9,7 +9,7 @@ export type confirmationHandles = {
 }
 
 const ConfirmationDialog = forwardRef<confirmationHandles>((_, ref) => {
-    const {selectedWorkshopIDs, availableWorkshops, loading, saveWorkshopData} = useGlobalContext()
+    const {selectedWorkshopIDs, availableWorkshops, loading, saveWorkshopData,resetErrorMsg } = useGlobalContext()
     const ConfirmationDialogRef = useRef<HTMLDialogElement>(null);
     useImperativeHandle(ref, () => ({
             confirm() {
@@ -23,19 +23,22 @@ const ConfirmationDialog = forwardRef<confirmationHandles>((_, ref) => {
 
     const handleClose = () => {
         ConfirmationDialogRef.current?.close()
+        resetErrorMsg()
     }
 
 
     return (
         <dialog
-            className={"rounded-2xl min-h-[35%] max-h-[70%] bg-gray-700 text-white backdrop:bg-black backdrop:bg-opacity-70 overflow-clip"}
+            className={"rounded-2xl w-2/5 min-h-[40%] max-h-[70%] bg-gray-700 text-white p-6 backdrop:bg-black backdrop:bg-opacity-70 overflow-clip"}
             ref={ConfirmationDialogRef}>
             <article className={"flex flex-col justify-between h-[45svh] md:h-[35svh]"}>
-                <section className={"flex flex-col flex-1 justify-between p-6 h-[90%] "}>
+                <section className={"flex flex-col gap-5 flex-1 justify-between  h-[90%] "}>
                     <h1 className={"text-2xl"}>The <b className={"text-blue-400"}>Workshops</b> you've selected </h1>
+                    {selectedWorkshopIDs.length < 2 &&
+                        <h2 className={"text-center text-xl p-2 text-red-500 font-bold"}>You've only selected {selectedWorkshopIDs.length} / 2, you can only register once !</h2>}
                     <div className={"flex flex-col justify-center items-center gap-5 h-full overflow-auto"}>
                         {availableWorkshops.filter((workshop) => selectedWorkshopIDs.includes(workshop.id)).map((workshop) => (
-                            <h2 className={"font-bold"} key={workshop.id}>{workshop.name}</h2>
+                            <h2 className={"font-bold border border-white py-2 px-4 rounded-full text-center"} key={workshop.id}>{workshop.name}</h2>
                         ))}
                     </div>
                     <ErrorMsg/>

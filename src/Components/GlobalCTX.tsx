@@ -40,6 +40,7 @@ export type globalCTXType = {
     handleWorkshopsSelection: (workShopID: string) => void
     saveWorkshopData: () => void,
     verifyTicketID: (ev: FormEvent<HTMLFormElement>) => void,
+    resetErrorMsg : () => void
     isMobile: boolean,
 
 }
@@ -61,7 +62,7 @@ const GlobalCtx: React.FC<{ children: React.ReactNode }> = ({children}) => {
         if (WorkshopExists) {
             const filteredIDs = selectedWorkshopIDs.filter(workshopID => workshopID !== WorkshopID);
             setSelectedWorkshopIDs(filteredIDs);
-        } else if (selectedWorkshopIDs.length < 3) setSelectedWorkshopIDs(prevState => [...prevState, WorkshopID])
+        } else if (selectedWorkshopIDs.length < 2) setSelectedWorkshopIDs(prevState => [...prevState, WorkshopID])
     }
 
 
@@ -90,8 +91,9 @@ const GlobalCtx: React.FC<{ children: React.ReactNode }> = ({children}) => {
                     errorMsg && setErrorMsg(null)
                 }
                 else {
-                    console.error("something went wrong try again later")
-                    setErrorMsg("something went wrong please try again later")
+                    setLoading(false)
+                    const response = await request.json()
+                    setErrorMsg(response.detail)
                 }
             }
            catch (error) {
@@ -121,7 +123,6 @@ const GlobalCtx: React.FC<{ children: React.ReactNode }> = ({children}) => {
                 setAvailableWorkshops(response)
                 setTicketID(TicketID)
                 setIsTicketVerified(true)
-                console.log(response)
                 setLoading(false)
                 errorMsg && setErrorMsg(null)
             }
@@ -146,6 +147,7 @@ const GlobalCtx: React.FC<{ children: React.ReactNode }> = ({children}) => {
         }).then(res => res.json()).then((data: eventData) => setEventData(data))
     }
 
+    const resetErrorMsg =  () => setErrorMsg("")
     useEffect(() => {
         if(windowWidth<768) setIsMobile(true)
         else setIsMobile(false)
@@ -164,7 +166,8 @@ const GlobalCtx: React.FC<{ children: React.ReactNode }> = ({children}) => {
             handleWorkshopsSelection,
             saveWorkshopData,
             verifyTicketID,
-            getEventData
+            getEventData,
+            resetErrorMsg
         }}>
             {children}
         </GlobalContext.Provider>
