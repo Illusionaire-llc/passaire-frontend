@@ -18,7 +18,7 @@ const WorkshopsGrid = () => {
                             gridTemplateColumns: `unset`,
                         }
                 }}
-                className={`grid place-items-center gap-4 w-full h-fit overflow-auto`}>
+                className={`grid place-items-center gap-4 w-full h-fit overflow-auto p-4`}>
                 {
                     availableWorkshops.map((workshopData: Workshop) => (
                         <WorkshopCard key={workshopData.id}

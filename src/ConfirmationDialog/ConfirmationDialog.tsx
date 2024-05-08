@@ -29,9 +29,9 @@ const ConfirmationDialog = forwardRef<confirmationHandles>((_, ref) => {
 
     return (
         <dialog
-            className={"rounded-2xl w-2/5 min-h-[40%] max-h-[70%] bg-gray-700 text-white p-6 backdrop:bg-black backdrop:bg-opacity-70 overflow-clip"}
+            className={"rounded-2xl w-full md:w-2/5 h-[60%] max-h-[70%] bg-gray-700 text-white p-6 backdrop:bg-black backdrop:bg-opacity-70 overflow-clip"}
             ref={ConfirmationDialogRef}>
-            <article className={"flex flex-col justify-between h-[45svh] md:h-[35svh]"}>
+            <article className={"flex flex-col justify-between h-full flex-1 md:h-[35svh]"}>
                 <section className={"flex flex-col gap-5 flex-1 justify-between  h-[90%] "}>
                     <h1 className={"text-2xl"}>The <b className={"text-blue-400"}>Workshops</b> you've selected </h1>
                     {selectedWorkshopIDs.length < 2 &&
@@ -45,10 +45,10 @@ const ConfirmationDialog = forwardRef<confirmationHandles>((_, ref) => {
                 </section>
                 <section className={"p-4 flex justify-center gap-20"}>
                     <button
-                        className={" w-1/4 px-4 py-2 bg-blue-500 text-white rounded-2xl hover:bg-blue-400 duration-300"}
+                        className={" w-[10rem] px-4 py-2 bg-blue-500 text-white rounded-2xl hover:bg-blue-400 duration-300"}
                         onClick={saveWorkshopData}> {!loading ? "Save" : <p className={"animate-spin"}>l</p>} </button>
                     <button
-                        className={" w-1/4 px-4 py-2 bg-blue-500 text-white rounded-2xl hover:bg-blue-400 duration-300"}
+                        className={" w-[10rem] px-4 py-2 bg-blue-500 text-white rounded-2xl hover:bg-blue-400 duration-300"}
                         onClick={handleClose}>Cancel
                     </button>
                 </section>
