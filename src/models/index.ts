@@ -27,7 +27,7 @@ export const ENDPOINTS = {
 export const venueID = window.location.hash.split('#')[2] || "65c40432f81716c33f256691";
 // export const tenantID = import.meta.env.VITE_TENANT_ID || "techshift";
 // Get tenant id from the URL
-export const tenantID = window.location.hash.split('#')[1] || "techshift";
+export const tenantID = window.location.hash.split('#')[1] || "illusionaire";
 // Console log the venueID and tenantID
 console.log(venueID, tenantID);
 
