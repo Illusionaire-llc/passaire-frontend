@@ -230,9 +230,9 @@ const EventFormOne = ({
             promocode
           </label>
           <input
-            type="promocode"
-            name="promocode"
-            id="promocode"
+            type="promoCode"
+            name="promoCode"
+            id="promoCode"
             // required
             // aria-required
             className="w-full px-3 py-2 border hover:border-secondary-100 focus:outline-none"
