@@ -5,8 +5,8 @@ console.log(window.location);
 
 
 // Get from the URL encoded
-export const startDate = window.location.hash.split("#")[3] || "2024-08-10";
-export const startTime = window.location.hash.split("#")[4] || "06:00";
+export const startDate = window.location.hash.split("#")[3] || "2024-06-17";
+export const startTime = window.location.hash.split("#")[4] || "05:00";
 
 export const mustHaveWorkshop = import.meta.env.VITE_MUST_HAVE_WORKSHOP || false;
 
