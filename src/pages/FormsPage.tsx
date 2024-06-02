@@ -232,8 +232,8 @@ const FormsPage = () => {
           </figure>
         )}
         <div className="w-[60%] max-md:w-full max-md:h-[60%] flex flex-col px-6 py-8">
-          <h3 className="text-2xl font-semibold uppercase mb-6 text-center">
-            registration
+          <h3 className="text-2xl font-bold uppercase mb-10 text-center ">
+            Ticket Reservation
           </h3>
           {currentForm === "FORM-EVENT-ONE" && (
             <EventFormOne

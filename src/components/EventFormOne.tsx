@@ -159,11 +159,11 @@ const EventFormOne = ({
           />
         </InputWrapper>
         {/* end ticket type select element */}
-        <InputWrapper dir="column">
+        <InputWrapper dir="column" className="hidden">
           <label
             htmlFor="workshop"
             className="text-zinc-700 font-medium capitalize"
-            aria-required
+            // aria-required
           >
             workshop
           </label>
@@ -191,7 +191,7 @@ const EventFormOne = ({
           />
         </InputWrapper>
         {/* end select elements */}
-        <InputWrapper dir="column">
+        <InputWrapper dir="column" className="hidden">
           <label
             htmlFor="mentorship"
             className="text-zinc-700 font-medium capitalize"
@@ -221,9 +221,27 @@ const EventFormOne = ({
             className="w-full border hover:border-secondary-100 focus:outline-none"
           />
         </InputWrapper>
+        <InputWrapper dir="column">
+          <label
+            htmlFor="promoCode"
+            className="text-zinc-700 font-medium capitalize"
+            // aria-required
+          >
+            promocode
+          </label>
+          <input
+            type="promocode"
+            name="promocode"
+            id="promocode"
+            // required
+            // aria-required
+            className="w-full px-3 py-2 border hover:border-secondary-100 focus:outline-none"
+            placeholder="enter promocode..."
+          />
+        </InputWrapper>
       </div>
       <div className="w-full max-md:flex-col md:flex-row-reverse flex items-center justify-end max-md:justify-center gap-6">
-        <InputWrapper dir="column">
+        <InputWrapper dir="column" className="hidden">
           <label
             htmlFor="eventsDate"
             className="text-zinc-700 font-medium capitalize"
@@ -235,8 +253,8 @@ const EventFormOne = ({
             type="date"
             name="eventsDate"
             id="eventsDate"
-            required
-            aria-required
+            // required
+            // aria-required
             defaultValue={startDate}
             // disabled
             className="w-full px-3 py-2 border hover:border-secondary-100 focus:outline-none"
@@ -277,19 +295,19 @@ const EventFormOne = ({
               htmlFor="card-method"
               className="capitalize font-medium cursor-pointer text-lg px-5 py-2 rounded-md border bg-gray-300 peer-checked:bg-gradient-to-tl peer-checked:from-secondary-200 peer-checked:to-secondary-100 peer-checked:font-bold peer-checked:text-white peer-checked:border-white hover:brightness-125"
             >
-              card
+              card or other
             </label>
           </span>
         </div>
       </div>
-      {isEmptyMentorship && isEmptyWorkshop && (
+      {/* {isEmptyMentorship && isEmptyWorkshop && (
         <div className="w-full flex items-center justify-center gap-3 px-3 py-2 mt-2 mb-1">
           <IoIosWarning className="text-2xl text-red-500" />
           <small className="font-bold capitalize text-red-700">
             please select at least one of mentorships or one of workshops
           </small>
         </div>
-      )}
+      )} */}
       <div className="w-full max-xs:flex-col flex gap-3 mt-4">
         {isFetchedMentorship &&
         isFetchedWorkspace &&
