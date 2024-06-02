@@ -134,6 +134,7 @@ const FormsPage = () => {
     ticket_price,
     ticket_name,
     ticket_id,
+
   }: {
     checkoutFormData: CheckoutInitialData;
     date_start: string;
@@ -170,7 +171,7 @@ const FormsPage = () => {
           },
         ],
         payment_method: checkoutFormData.paymentMethod,
-        promocode: "",
+        promocode: checkoutFormData.promoCode,
         venue_id: venueID,
       },
       {
